@@ -12,6 +12,8 @@ import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import NumberPad from "@/components/NumberPad";
 import useNumber from "@/hooks/useNumber";
+import Recipient from "@/components/ui/Recipient";
+import Balance from "@/components/ui/Balance";
 
 export default function Home() {
   const { displayValue, appendDigit, addDecimalPoint, deleteDigit, clearAll } =
@@ -19,6 +21,7 @@ export default function Home() {
 
   const text = useThemeColor({}, "text");
   const bg = useThemeColor({}, "background");
+  const ripple = useThemeColor({}, "ripple");
 
   return (
     <ThemedView style={styles.container}>
@@ -27,10 +30,17 @@ export default function Home() {
         style={{ flex: 1, width: "100%" }}
         showsVerticalScrollIndicator={false}
       >
-        <ThemedText style={styles.label}>Enter Amount</ThemedText>
+        <Recipient names={["John Doe"]} />
         <AnimatedText size={76} style={[styles.textStyle, { color: text }]}>
           {displayValue}
         </AnimatedText>
+        <Balance
+          balance={19485}
+          onPress={() => {
+            clearAll();
+            appendDigit(19485);
+          }}
+        />
       </ScrollView>
       <NumberPad
         onPress={(digit) => {
@@ -56,7 +66,7 @@ export default function Home() {
       >
         <Pressable
           style={[styles.continue, { backgroundColor: text }]}
-          android_ripple={{ color: bg + "00" }}
+          android_ripple={{ color: ripple }}
         >
           <ThemedText style={{ color: bg }}>Continue</ThemedText>
         </Pressable>
@@ -68,7 +78,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
   textStyle: {
@@ -82,10 +91,9 @@ const styles = StyleSheet.create({
   },
   screen: {
     width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-    // minHeight: "100%",
+    // alignItems: "center",
     flexGrow: 1,
+    paddingVertical: 12,
   },
   continue: {
     marginBottom: 24,
@@ -95,5 +103,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
 });

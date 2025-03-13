@@ -14,13 +14,13 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useScaleFont } from "@/hooks/useScaleFont";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const text = useThemeColor({}, "text");
   const backgroundColor = useThemeColor({}, "background");
 
   const [loaded] = useFonts({
@@ -49,7 +49,7 @@ export default function RootLayout() {
               backgroundColor,
             },
             headerTitleStyle: {
-              fontSize: 24,
+              fontSize: 22,
               fontFamily: "QuicksandBold",
             },
             headerRight: () => (

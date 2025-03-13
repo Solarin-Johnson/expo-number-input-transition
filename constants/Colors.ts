@@ -10,11 +10,15 @@ export const Colors = {
   light: {
     text: "#11181C",
     background: "#fff",
+    foreground: "#f9f9f9",
+    ripple: "#B4B4B400",
     tint: tintColorLight,
   },
   dark: {
     text: "#ECEDEE",
-    background: "#151718",
+    background: "#030003",
+    foreground: "#110F11",
+    ripple: "#84848400",
     tint: tintColorDark,
   },
 };

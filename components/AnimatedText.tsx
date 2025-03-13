@@ -1,4 +1,9 @@
-import { StyleSheet, TextProps, useWindowDimensions } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  TextProps,
+  useWindowDimensions,
+} from "react-native";
 import React, { useMemo } from "react";
 import Animated, {
   FadeInDown,
@@ -26,6 +31,7 @@ const springConfig = {
 const AnimatedText = (props: TextProps & { size: number }) => {
   const { children, size, ...rest } = props;
   const { width } = useWindowDimensions();
+  const isWeb = Platform.OS === "web";
 
   const splitText: CharacterObject[] = useMemo(() => {
     if (typeof children !== "string" && typeof children !== "number") {
@@ -54,10 +60,10 @@ const AnimatedText = (props: TextProps & { size: number }) => {
 
   const animatedScale = useDerivedValue(() => {
     const len = splitText.filter((item) => item.char !== ",").length;
-    const scaleRatio = Math.min(0.9, BASE_WIDTH / width);
+    const scaleRatio = isWeb ? 0.9 : Math.min(0.9, BASE_WIDTH / width);
 
     if (len > 6) {
-      return scaleRatio * 0.58;
+      return scaleRatio * 0.56;
     }
     return 1;
   });
@@ -116,6 +122,8 @@ const styles = StyleSheet.create({
   cover: {
     width: "100%",
     alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
   container: {
     flexDirection: "row",

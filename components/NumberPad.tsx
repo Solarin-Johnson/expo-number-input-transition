@@ -1,10 +1,11 @@
 import React, { memo } from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Pressable } from "react-native";
 import { ThemedText } from "./ThemedText";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Entypo from "@expo/vector-icons/Entypo";
 import { ThemedView } from "./ThemedView";
 import { useScaleFont } from "@/hooks/useScaleFont";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface NumberPadProps {
   onPress: (value: number) => void;
@@ -17,6 +18,7 @@ interface NumberPadProps {
 const NumberPad: React.FC<NumberPadProps> = memo(
   ({ onPress, onDelete, onClear, onDot, showDot = true }) => {
     const scaleFont = useScaleFont();
+    const ripple = useThemeColor({}, "ripple");
 
     const renderButton = React.useCallback(
       (value: string) => {
@@ -35,7 +37,7 @@ const NumberPad: React.FC<NumberPadProps> = memo(
         };
 
         return (
-          <TouchableOpacity
+          <Pressable
             key={value}
             style={[styles.button, isSpecialButton && styles.specialButton]}
             onPress={handlePress}
@@ -43,6 +45,12 @@ const NumberPad: React.FC<NumberPadProps> = memo(
               if (value === "delete") {
                 onClear?.();
               }
+            }}
+            android_ripple={{
+              color: ripple,
+              borderless: true,
+              radius: 42,
+              foreground: true,
             }}
           >
             {value === "delete" ? (
@@ -55,12 +63,12 @@ const NumberPad: React.FC<NumberPadProps> = memo(
               </ThemedText>
             ) : (
               <ThemedText
-                style={[styles.buttonText, { fontSize: scaleFont(28) }]}
+                style={[styles.buttonText, { fontSize: scaleFont(26) }]}
               >
                 {value}
               </ThemedText>
             )}
-          </TouchableOpacity>
+          </Pressable>
         );
       },
       [onDelete, onClear, onPress]
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
     minHeight: 200,
-    maxHeight: 320,
+    maxHeight: 290,
   },
   row: {
     flexDirection: "row",
