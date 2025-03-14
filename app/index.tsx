@@ -1,5 +1,4 @@
 import AnimatedText from "@/components/AnimatedText";
-import { useReducer } from "react";
 import {
   PixelRatio,
   Pressable,
@@ -16,8 +15,14 @@ import Recipient from "@/components/ui/Recipient";
 import Balance from "@/components/ui/Balance";
 
 export default function Home() {
-  const { displayValue, appendDigit, addDecimalPoint, deleteDigit, clearAll } =
-    useNumber();
+  const {
+    displayValue,
+    appendDigit,
+    addDecimalPoint,
+    replaceDigit,
+    deleteDigit,
+    clearAll,
+  } = useNumber();
 
   const text = useThemeColor({}, "text");
   const bg = useThemeColor({}, "background");
@@ -37,8 +42,7 @@ export default function Home() {
         <Balance
           balance={19485}
           onPress={() => {
-            clearAll();
-            appendDigit(19485);
+            replaceDigit(19485);
           }}
         />
       </ScrollView>
@@ -91,7 +95,6 @@ const styles = StyleSheet.create({
   },
   screen: {
     width: "100%",
-    // alignItems: "center",
     flexGrow: 1,
     paddingVertical: 12,
   },

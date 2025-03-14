@@ -23,6 +23,9 @@ function numberReducer(state: NumberState, action: Action): NumberState {
     case "DECIMAL_POINT":
       return handleDecimalPoint(state);
 
+    case "REPLACE_DIGIT":
+      return handleReplaceDigit(state, action.digit!);
+
     case "DELETE_DIGIT":
       return handleDeleteDigit(state);
 
@@ -32,6 +35,31 @@ function numberReducer(state: NumberState, action: Action): NumberState {
     default:
       return state;
   }
+}
+
+function handleReplaceDigit(state: NumberState, digit: number): NumberState {
+  if (digit === 0) {
+    return {
+      value: 0,
+      isDecimal: false,
+      decimalPlaces: 0,
+      displayValue: "0",
+    };
+  }
+
+  const newDisplayValue = digit.toString();
+
+  const formattedValue = formatDisplayValue(newDisplayValue);
+
+  const rawValue = parseFloat(newDisplayValue.replace(/,/g, ""));
+
+  return {
+    ...state,
+    displayValue: formattedValue,
+    value: rawValue,
+    isDecimal: false,
+    decimalPlaces: 0,
+  };
 }
 
 function handleAppendDigit(state: NumberState, digit: number): NumberState {
@@ -140,6 +168,10 @@ function useNumber() {
     dispatch({ type: "DECIMAL_POINT" });
   };
 
+  const replaceDigit = (digit: number) => {
+    dispatch({ type: "REPLACE_DIGIT", digit });
+  };
+
   const deleteDigit = () => {
     dispatch({ type: "DELETE_DIGIT" });
   };
@@ -155,6 +187,7 @@ function useNumber() {
     decimalPlaces: state.decimalPlaces,
     appendDigit,
     addDecimalPoint,
+    replaceDigit,
     deleteDigit,
     clearAll,
   };
