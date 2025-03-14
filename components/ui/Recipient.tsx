@@ -1,6 +1,6 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { ThemedText } from "../ThemedText";
 import { useScaleFont } from "@/hooks/useScaleFont";
 

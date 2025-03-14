@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-end",
     minHeight: 200,
-    maxHeight: 290,
+    maxHeight: 300,
   },
   row: {
     flexDirection: "row",

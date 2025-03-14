@@ -18,7 +18,7 @@ export const Colors = {
     text: "#ECEDEE",
     background: "#030003",
     foreground: "#110F11",
-    ripple: "#84848400",
+    ripple: "#84848420",
     tint: tintColorDark,
   },
 };

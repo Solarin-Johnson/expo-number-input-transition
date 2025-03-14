@@ -13,6 +13,12 @@ import NumberPad from "@/components/NumberPad";
 import useNumber from "@/hooks/useNumber";
 import Recipient from "@/components/ui/Recipient";
 import Balance from "@/components/ui/Balance";
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Home() {
   const {
@@ -27,6 +33,15 @@ export default function Home() {
   const text = useThemeColor({}, "text");
   const bg = useThemeColor({}, "background");
   const ripple = useThemeColor({}, "ripple");
+
+  const buttonAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: withTiming(
+        parseFloat(displayValue) === 0 ? text + "70" : text,
+        { duration: 120 }
+      ),
+    };
+  });
 
   return (
     <ThemedView style={styles.container}>
@@ -68,12 +83,16 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        <Pressable
-          style={[styles.continue, { backgroundColor: text }]}
+        <AnimatedPressable
+          style={[
+            styles.continue,
+            { backgroundColor: text },
+            buttonAnimatedStyle,
+          ]}
           android_ripple={{ color: ripple }}
         >
           <ThemedText style={{ color: bg }}>Continue</ThemedText>
-        </Pressable>
+        </AnimatedPressable>
       </View>
     </ThemedView>
   );
@@ -87,6 +106,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: PixelRatio.getPixelSizeForLayoutSize(32),
     fontFamily: "QuicksandBold",
+    lineHeight: 100,
   },
   label: {
     fontSize: 18,
